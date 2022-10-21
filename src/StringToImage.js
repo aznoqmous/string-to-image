@@ -1,3 +1,5 @@
+import SeededRandom from "./SeededRandom"
+
 export default class StringToImage {
     constructor(input, opts={}) {
         this.input = input
@@ -19,8 +21,7 @@ export default class StringToImage {
         this.c.height = this.opts.height
         this.ctx = this.c.getContext('2d')
 
-        this.seed = this.input.split('').map(c => c.charCodeAt(0)).reduce((prev, current) => prev + current, 0)
-        this.seed = parseInt(this.seed)  * 93456123 % 123456789
+        this.generator = new SeededRandom(this.input)
     }
     draw(){
         this.ctx.clearRect(0, 0, this.c.width, this.c.height)
@@ -28,7 +29,7 @@ export default class StringToImage {
         this.ctx.fillStyle = this.opts.color
         for(let x = 0; x < this.c.width; x++){
             for(let y = 0; y < this.c.height; y++){
-                let rand = this.seededRandom(x + y*10)
+                let rand = this.generator.random()
                 if(rand > 1 - this.opts.population) {
                     this.ctx.fillRect(x,y,1,1)
                 }
@@ -58,11 +59,6 @@ export default class StringToImage {
             )
             this.ctx.restore()
         }
-    }
-
-    seededRandom(value){
-        let x = Math.sin(this.seed * value) * 10000
-        return x - Math.floor(x)
     }
 
     getUrl(){
