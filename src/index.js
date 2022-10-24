@@ -6,7 +6,7 @@ const createImage = ()=>{
     
     let img = document.createElement('img')
     let size = 9
-    img.src = StringToImage.generateImageUrl(index, {
+    img.src = StringToImage.generateImageUrl(Math.random(), {
         width: size,
         height: size,
         rounded: true,

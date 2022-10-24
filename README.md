@@ -1,5 +1,7 @@
 # StringToImage
 
+[example](https://aznoqmous.github.io/string-to-image/)
+
 ## Install
 ```bash
 npm install aznoqmous/string-to-image
