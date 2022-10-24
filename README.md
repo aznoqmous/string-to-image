@@ -48,6 +48,11 @@ StringToImage.generateImageUrl("my beautiful avatar", {
     /**
      * 0 to 1 value, 0 = empty image, 1 = filled image
      */
-    population: 0.6 
+    population: 0.6,
+
+    /**
+     * if set to true, the generated image will be rounded
+     */
+    rounded: true
 })
 ```
