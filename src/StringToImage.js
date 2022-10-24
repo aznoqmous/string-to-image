@@ -2,14 +2,15 @@ import SeededRandom from "./SeededRandom"
 
 export default class StringToImage {
     constructor(input, opts={}) {
-        this.input = input
+        this.input = input+""
         this.opts = Object.assign({
             width: 9,
             height: 9,
             color: "limegreen",
             horizontalMirror: true,
             verticalMirror: false,
-            population: 0.6
+            population: 0.6,
+            rounded: true
         }, opts)
         this.build()
         this.draw()
@@ -30,6 +31,7 @@ export default class StringToImage {
         for(let x = 0; x < this.c.width; x++){
             for(let y = 0; y < this.c.height; y++){
                 let rand = this.generator.random()
+                if(this.opts.rounded && !this.inEllipse(x,y)) continue;
                 if(rand > 1 - this.opts.population) {
                     this.ctx.fillRect(x,y,1,1)
                 }
@@ -63,6 +65,11 @@ export default class StringToImage {
 
     getUrl(){
         return this.c.toDataURL()
+    }
+
+    inEllipse(x,y){
+        return Math.pow((x - this.c.width/2), 2) / Math.pow(this.c.width/2, 2)
+        + Math.pow((y - this.c.height/2), 2) / Math.pow(this.c.height/2, 2) <= 1
     }
 
     static generateImageUrl(input, opts){
